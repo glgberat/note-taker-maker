@@ -12,7 +12,25 @@ app.use(express.json());
 app.use(express.static("public"));
 
 
+//Routes  //
+//GET API request for starting page index.html
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "index.html"));
+  });
 
+// GET API request for notes page
+app.get("/notes", function (req, res) {
+    res.sendFile(path.join(__dirname, "public", "notes.html"));
+  });
+
+
+  app.get("/api/notes", function (req, res) {
+    fs.readFile("./db/db.json", function (err, data) {
+      if (err) throw err;
+      let allNotes = JSON.parse(data);
+      return res.json(allNotes);
+    });
+  });
 
 
 
