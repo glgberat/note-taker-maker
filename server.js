@@ -54,6 +54,29 @@ app.post("/api/notes", function (req, res) {
 
 
 
+  // DELETE API request by id (selected note at front end)
+app.delete("/api/notes/:id", function (req, res) {
+    const deleteNote = req.params.id;
+    fs.readFile("./db/db.json", function (err, data) {
+      if (err) throw err;
+      let Notes = JSON.parse(data);
+      function findNote(deleteNote, Notes) {
+        for (var i = 0; i < Notes.length; i++) { // Looking for the pointed data in the db json to be deleted
+          if (Notes[i].id === deleteNote) {
+            Notes.splice(i, 1);
+          }
+        }
+      }
+      findNote(deleteNote, Notes);
+      fs.writeFile("./db/db.json", JSON.stringify(Notes, null, 3), (err) => {
+        if (err) throw err;
+        res.send("200");
+      });
+    });
+  });
+
+
+
 
 
 //server listening the port #3002
