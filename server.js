@@ -27,10 +27,30 @@ app.get("/notes", function (req, res) {
   app.get("/api/notes", function (req, res) {
     fs.readFile("./db/db.json", function (err, data) {
       if (err) throw err;
-      let allNotes = JSON.parse(data);
-      return res.json(allNotes);
+      let Notes = JSON.parse(data);
+      return res.json(Notes);
     });
   });
+
+
+  //POST API request
+app.post("/api/notes", function (req, res) {
+    fs.readFile("./db/db.json", function (err, data) {
+      if (err) throw err;
+      let Notes = JSON.parse(data);
+      let AddNote = {
+        title: req.body.title,
+        text: req.body.text,
+        id: shortid.generate(), //id generated randomly for each notes using npm package 'shortid'
+      };
+      Notes.push(AddNote);
+      fs.writeFile("./db/db.json", JSON.stringify(Notes, null, 3), (err) => {
+        if (err) throw err;
+        res.send("200");
+      });
+    });
+  });
+
 
 
 
