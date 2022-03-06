@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const PORT = process.env.PORT || 3002; //This environment variable needed to deploy for Heroku
 const app = express();
+const shortid = require("shortid");
 
 
 // Sets up the Express app to handle data parsing
@@ -20,7 +21,7 @@ app.get("/", function (req, res) {
 
 // GET API request for notes page
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, "public", "notes.html"));
+    res.sendFile(path.join(__dirname,  './public/notes.html'));
   });
 
 
